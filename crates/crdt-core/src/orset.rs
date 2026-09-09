@@ -99,4 +99,21 @@ mod tests {
         set_a.merge(&set_b);
         assert!(set_a.contains(&elem));
     }
+
+    #[test]
+    fn merge_is_commutative_and_add_wins() {
+        let mut a = ORSet::new("A");
+        let mut b = ORSet::new("B");
+        a.add("x".to_string());
+        b.add("y".to_string());
+        b.remove(&"y".to_string());
+        let mut left = a.clone();
+        left.merge(&b);
+        let mut right = b.clone();
+        right.merge(&a);
+        assert_eq!(left.contains(&"x".to_string()), right.contains(&"x".to_string()));
+        assert_eq!(left.contains(&"y".to_string()), right.contains(&"y".to_string()));
+        assert!(left.contains(&"x".to_string()));
+        assert!(!left.contains(&"y".to_string()));
+    }
 }

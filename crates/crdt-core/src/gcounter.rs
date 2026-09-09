@@ -66,5 +66,27 @@ mod tests {
             prop_assert_eq!(c1.value(), c2.value());
             prop_assert_eq!(c1.counts, c2.counts);
         }
+
+        #[test]
+        fn merge_is_associative(d1 in 0..200u64, d2 in 0..200u64, d3 in 0..200u64) {
+            let mut a = GCounter::new("A");
+            a.increment(d1);
+            let mut b = GCounter::new("B");
+            b.increment(d2);
+            let mut c = GCounter::new("C");
+            c.increment(d3);
+
+            let mut ab = a.clone();
+            ab.merge(&b);
+            ab.merge(&c);
+
+            let mut bc = b.clone();
+            bc.merge(&c);
+            let mut left = a.clone();
+            left.merge(&bc);
+
+            prop_assert_eq!(ab.value(), left.value());
+            prop_assert_eq!(ab.counts, left.counts);
+        }
     }
 }
