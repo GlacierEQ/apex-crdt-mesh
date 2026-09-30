@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "apex-crdt-mesh"
+version = "1.0.0"
+description = "Production-grade Apex Crdt Mesh system with strict contract enforcement, receipt-backed operations, and verified test co"
+requires-python = ">=3.11"
+dependencies = []
+keywords = ["contracts", "receipts", "verification"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
